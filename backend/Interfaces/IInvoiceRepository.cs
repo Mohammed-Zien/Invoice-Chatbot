@@ -12,5 +12,6 @@ namespace backend.Interfaces
         public Task<Invoice?> UpdateAsync(int id, Invoice invoiceModel);
         public Task<Invoice?> DeleteAsync(int id);
         public Task<bool> InvoiceExists(int id);
+        public Task<Invoice?> UpdateInvoiceTotalAsync(int id);
     }
 }

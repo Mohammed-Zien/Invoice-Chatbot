@@ -47,12 +47,10 @@ namespace backend.Mappers
                 Issuedate = DateOnly.FromDateTime(DateTime.Today),
                 Duedate = invoiceDto.Duedate,
                 Status = invoiceDto.Status,
-                Totalamount = 0, //TODO: Calculate using details,
                 Currency = invoiceDto.Currency ?? "USD",
                 Notes = invoiceDto.Notes ?? "",
 
                 Appuserid = "admin", // TODO: Add this once IdentityCore is set up
-                // Invoicedetails = ...      // TODO: Link once details are added
             };
         }
 
@@ -64,12 +62,10 @@ namespace backend.Mappers
                 Issuedate = DateOnly.FromDateTime(DateTime.Today),
                 Duedate = invoiceDto.Duedate,
                 Status = invoiceDto.Status,
-                Totalamount = invoiceDto.Totalamount,
                 Currency = invoiceDto.Currency ?? "USD",
                 Notes = invoiceDto.Notes ?? "",
 
                 Appuserid = "admin", // TODO: Add this once IdentityCore is set up
-                // Invoicedetails = ...      // TODO: Link once details are added
             };
         }
     }

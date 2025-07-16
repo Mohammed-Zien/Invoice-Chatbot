@@ -47,6 +47,8 @@ namespace backend.Controllers
             if (result is null)
                 return NotFound($"404: INVOICE DETAIL {id} NOT FOUND");
 
+            var invoice = await _invoiceRepo.UpdateInvoiceTotalAsync(result.Invoiceid);
+
             return Ok($"SUCESS : Invoice {id} deleted");
         }
 
@@ -61,6 +63,8 @@ namespace backend.Controllers
 
             var result = await _invoiceDetailRepo.CreateAsync(invoiceDetailDto.toInvoiceDetailFromCreateInvoiceDetailDto(invoice_id));
 
+            var invoice = await _invoiceRepo.UpdateInvoiceTotalAsync(invoice_id);
+
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result.toInvoiceDetailDto());
         }
 
@@ -74,6 +78,8 @@ namespace backend.Controllers
 
             if (result is null)
                 return NotFound($"404: INVOICE DETAIL {id} IS NOT FOUND");
+
+            var invoice = await _invoiceRepo.UpdateInvoiceTotalAsync(result.Invoiceid);
 
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result.toInvoiceDetailDto());
         }

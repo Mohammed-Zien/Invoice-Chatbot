@@ -12,9 +12,9 @@ namespace backend.Mappers
                 Itemdescription = invoiceDetailModel.Itemdescription,
                 Quantity = invoiceDetailModel.Quantity,
                 Unitprice = invoiceDetailModel.Unitprice,
-                Linetotal = invoiceDetailModel.Linetotal,
                 Taxrate = invoiceDetailModel.Taxrate,
                 Discount = invoiceDetailModel.Discount,
+                Linetotal = (invoiceDetailModel.Quantity * invoiceDetailModel.Unitprice) * (1 - invoiceDetailModel.Discount) * (1 + invoiceDetailModel.Taxrate),
             };
         }
 
@@ -26,9 +26,9 @@ namespace backend.Mappers
                 Itemdescription = invoiceDetailDto.Itemdescription,
                 Quantity = invoiceDetailDto.Quantity,
                 Unitprice = invoiceDetailDto.Unitprice,
-                Linetotal = invoiceDetailDto.Linetotal,
                 Taxrate = invoiceDetailDto.Taxrate,
                 Discount = invoiceDetailDto.Discount,
+                Linetotal = (invoiceDetailDto.Quantity * invoiceDetailDto.Unitprice) * (1 - invoiceDetailDto.Discount) * (1 + invoiceDetailDto.Taxrate),
             };
         }
         public static Invoicedetail toInvoiceDetailFromUpdateInvoiceDetailDto(this UpdateInvoiceDetailDto invoiceDetailDto)
@@ -38,9 +38,9 @@ namespace backend.Mappers
                 Itemdescription = invoiceDetailDto.Itemdescription,
                 Quantity = invoiceDetailDto.Quantity,
                 Unitprice = invoiceDetailDto.Unitprice,
-                Linetotal = invoiceDetailDto.Linetotal,
                 Taxrate = invoiceDetailDto.Taxrate,
                 Discount = invoiceDetailDto.Discount,
+                Linetotal = (invoiceDetailDto.Quantity * invoiceDetailDto.Unitprice) * (1 - invoiceDetailDto.Discount) * (1 + invoiceDetailDto.Taxrate),
             };
         }
     }

@@ -61,7 +61,6 @@ namespace backend.Repositories
                 Updatedinvoice.Clientname = invoiceModel.Clientname;
                 Updatedinvoice.Duedate = invoiceModel.Duedate;
                 Updatedinvoice.Status = invoiceModel.Status;
-                Updatedinvoice.Totalamount = invoiceModel.Totalamount;
                 Updatedinvoice.Currency = invoiceModel.Currency;
                 Updatedinvoice.Notes = invoiceModel.Notes;
 
@@ -70,6 +69,21 @@ namespace backend.Repositories
             }
 
             return Updatedinvoice;
+        }
+
+        public async Task<Invoice?> UpdateInvoiceTotalAsync(int id)
+        {
+            var total = await _context.Invoicedetails.Where(d => d.Invoiceid == id).SumAsync(d => d.Linetotal);
+
+            var invoice = await _context.Invoices.FindAsync(id);
+            if (invoice is not null)
+            {
+                invoice.Totalamount = total;
+                _context.Update(invoice);
+                await _context.SaveChangesAsync();
+            }
+
+            return invoice;
         }
     }
 }
