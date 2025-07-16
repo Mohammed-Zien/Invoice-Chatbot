@@ -16,10 +16,8 @@ namespace backend.Repositories
         {
             _context = context;
         }
-        public async Task<Invoice> CreateAsync(CreateInvoiceDto invoiceDto)
-        {
-            var invoiceModel = invoiceDto.toInvoiceFromCreateInvoiceDto();
-            
+        public async Task<Invoice> CreateAsync(Invoice invoiceModel)
+        { 
             await _context.Invoices.AddAsync(invoiceModel);
             await _context.SaveChangesAsync();
 
@@ -46,25 +44,32 @@ namespace backend.Repositories
 
         public Task<Invoice?> GetByIdAsync(int id)
         {
-            return _context.Invoices.FirstOrDefaultAsync(i => i.Id == id);
+            return _context.Invoices.Include(d => d.Invoicedetails).FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<Invoice?> UpdateAsync(int id, UpdateInvoiceDto invoiceDto)
+        public async Task<bool> InvoiceExists(int id)
         {
-            var invoice = await _context.Invoices.FirstOrDefaultAsync(i => i.Id == id);
-            if(invoice is not null)
-            {
-                invoice.Clientname = invoiceDto.Clientname;
-                invoice.Duedate = invoiceDto.Duedate;
-                invoice.Status = invoiceDto.Status;
-                invoice.Currency = invoiceDto.Currency;
-                invoice.Notes = invoiceDto.Notes;
+            return await _context.Invoices.AnyAsync(i => i.Id == id);
+        }
 
-                _context.Update(invoice);
+        public async Task<Invoice?> UpdateAsync(int id, Invoice invoiceModel)
+        {
+            var Updatedinvoice = await _context.Invoices.FirstOrDefaultAsync(i => i.Id == id);
+            
+            if(Updatedinvoice is not null)
+            {
+                Updatedinvoice.Clientname = invoiceModel.Clientname;
+                Updatedinvoice.Duedate = invoiceModel.Duedate;
+                Updatedinvoice.Status = invoiceModel.Status;
+                Updatedinvoice.Totalamount = invoiceModel.Totalamount;
+                Updatedinvoice.Currency = invoiceModel.Currency;
+                Updatedinvoice.Notes = invoiceModel.Notes;
+
+                _context.Update(Updatedinvoice);
                 await _context.SaveChangesAsync();
             }
 
-            return invoice;
+            return Updatedinvoice;
         }
     }
 }

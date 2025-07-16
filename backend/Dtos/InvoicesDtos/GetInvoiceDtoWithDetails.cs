@@ -1,8 +1,9 @@
-﻿using backend.Models;
+﻿using backend.Dtos.InvoiceDetailsDtos;
+using backend.Models;
 
 namespace backend.Dtos.InvoicesDtos
 {
-    public class GetInvoiceDto
+    public class GetInvoiceDtoWithDetails
     {
         public int Id { get; set; }
         public string? Invoicenumber { get; set; }
@@ -20,5 +21,8 @@ namespace backend.Dtos.InvoicesDtos
         public string? Currency { get; set; }
 
         public string? Notes { get; set; }
+
+        public virtual ICollection<GetInvoiceDetailDto> Invoicedetails { get; set; } = new List<GetInvoiceDetailDto>();
+
     }
 }

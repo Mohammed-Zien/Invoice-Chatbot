@@ -35,7 +35,7 @@ namespace backend.Controllers
             if (invoice is null)
                 return NotFound($"404 : INVOICE {id} IS NOT FOUND");
 
-            return Ok(invoice.toGetInvoiceDto());
+            return Ok(invoice.toGetInvoiceDtoWithDetails());
         }
 
         [HttpPost]
@@ -44,17 +44,14 @@ namespace backend.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var invoice = await _invoiceRepo.CreateAsync(createInvoiceDto);
+            var invoice = await _invoiceRepo.CreateAsync(createInvoiceDto.toInvoiceFromCreateInvoiceDto());
 
             return CreatedAtAction(nameof(GetById), new { id = invoice.Id }, invoice.toGetInvoiceDto());
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
+        { 
             var invoice = await _invoiceRepo.DeleteAsync(id);
             if (invoice is null)
                 return NotFound($"404 : INVOICE {id} IS NOT FOUND");
@@ -65,7 +62,10 @@ namespace backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateInvoiceDto invoiceDto)
         {
-            var result = await _invoiceRepo.UpdateAsync(id, invoiceDto);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _invoiceRepo.UpdateAsync(id, invoiceDto.toInvoiceFromUpdateInvoiceDto());
 
             if(result is null)
                 return NotFound($"404 : INVOICE {id} IS NOT FOUND");

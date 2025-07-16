@@ -10,6 +10,7 @@ namespace backend.Mappers
         {
             return new GetInvoiceDto
             {
+                Id = invoiceModel.Id,
                 Invoicenumber = invoiceModel.Invoicenumber,
                 Clientname = invoiceModel.Clientname,
                 Issuedate = invoiceModel.Issuedate,
@@ -17,7 +18,23 @@ namespace backend.Mappers
                 Status = invoiceModel.Status,
                 Totalamount = invoiceModel.Totalamount,
                 Currency = invoiceModel.Currency ?? "USD",
-                Notes = invoiceModel.Notes?? ""
+                Notes = invoiceModel.Notes ?? ""
+            };
+        }
+        public static GetInvoiceDtoWithDetails toGetInvoiceDtoWithDetails(this Invoice invoiceModel)
+        {
+            return new GetInvoiceDtoWithDetails
+            {
+                Id = invoiceModel.Id,
+                Invoicenumber = invoiceModel.Invoicenumber,
+                Clientname = invoiceModel.Clientname,
+                Issuedate = invoiceModel.Issuedate,
+                Duedate = invoiceModel.Duedate,
+                Status = invoiceModel.Status,
+                Totalamount = invoiceModel.Totalamount,
+                Currency = invoiceModel.Currency ?? "USD",
+                Notes = invoiceModel.Notes ?? "",
+                Invoicedetails = invoiceModel.Invoicedetails.Select(i => i.toInvoiceDetailDto()).ToList()
             };
         }
 

@@ -11,10 +11,10 @@ public class CreateInvoiceDto
     [StringLength(255)]
     public string? Clientname { get; set; }
 
-    [Required]
-    [DueDateDataAnnotation] // Custom annotation to insure that the due date is before the issue date
+    [DueDateDataAnnotation] // Custom annotation to insure that the due date is after the issue date
     public DateOnly? Duedate { get; set; }
-
+    
+    [Required]
     [Range(0, 2)]
     public int Status { get; set; }
 
