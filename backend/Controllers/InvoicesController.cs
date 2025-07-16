@@ -65,9 +65,6 @@ namespace backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateInvoiceDto invoiceDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var result = await _invoiceRepo.UpdateAsync(id, invoiceDto);
 
             if(result is null)

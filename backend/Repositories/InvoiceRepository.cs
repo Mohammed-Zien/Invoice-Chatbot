@@ -28,7 +28,7 @@ namespace backend.Repositories
 
         public async Task<Invoice?> DeleteAsync(int id)
         {
-            var invoice = await _context.Invoices.FirstOrDefaultAsync();
+            var invoice = await _context.Invoices.FirstOrDefaultAsync(i => i.Id == id);
             if (invoice is not null)
             {
                 _context.Remove(invoice);

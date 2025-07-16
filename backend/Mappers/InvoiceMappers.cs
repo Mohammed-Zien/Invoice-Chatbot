@@ -16,8 +16,8 @@ namespace backend.Mappers
                 Duedate = invoiceModel.Duedate,
                 Status = invoiceModel.Status,
                 Totalamount = invoiceModel.Totalamount,
-                Currency = invoiceModel.Currency,
-                Notes = invoiceModel.Notes
+                Currency = invoiceModel.Currency ?? "USD",
+                Notes = invoiceModel.Notes?? ""
             };
         }
 
@@ -25,14 +25,14 @@ namespace backend.Mappers
         {
             return new Invoice
             {
-                Invoicenumber = invoiceDto.Invoicenumber,
+                Invoicenumber = invoiceDto.Invoicenumber,   
                 Clientname = invoiceDto.Clientname,
                 Issuedate = DateOnly.FromDateTime(DateTime.Today),
                 Duedate = invoiceDto.Duedate,
                 Status = invoiceDto.Status,
                 Totalamount = 0, //TODO: Calculate using details,
-                Currency = invoiceDto.Currency,
-                Notes = invoiceDto.Notes,
+                Currency = invoiceDto.Currency ?? "USD",
+                Notes = invoiceDto.Notes ?? "",
 
                 Appuserid = "admin", // TODO: Add this once IdentityCore is set up
                 // Invoicedetails = ...      // TODO: Link once details are added
@@ -47,9 +47,9 @@ namespace backend.Mappers
                 Issuedate = DateOnly.FromDateTime(DateTime.Today),
                 Duedate = invoiceDto.Duedate,
                 Status = invoiceDto.Status,
-                Totalamount = 0, //TODO: Calculate using details,
-                Currency = invoiceDto.Currency,
-                Notes = invoiceDto.Notes,
+                Totalamount = invoiceDto.Totalamount,
+                Currency = invoiceDto.Currency ?? "USD",
+                Notes = invoiceDto.Notes ?? "",
 
                 Appuserid = "admin", // TODO: Add this once IdentityCore is set up
                 // Invoicedetails = ...      // TODO: Link once details are added
