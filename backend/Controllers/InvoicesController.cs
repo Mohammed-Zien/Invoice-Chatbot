@@ -1,4 +1,5 @@
 ﻿using backend.Dtos.InvoicesDtos;
+using backend.Helpers;
 using backend.Interfaces;
 using backend.Mappers;
 using backend.Models;
@@ -18,9 +19,9 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
-            var invoices = await _invoiceRepo.GetAllAsync();
+            var invoices = await _invoiceRepo.GetAllAsync(query);
 
             var invoicesDtos = invoices.Select(i => i.toGetInvoiceDto());
 
