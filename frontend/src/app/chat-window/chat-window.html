@@ -1,0 +1,13 @@
+<div class="chat-scroll-container" #scrollContainer>
+  <div class="messages">
+    <div *ngFor="let msg of messages$ | async" class="message" [ngClass]="msg.role">
+      {{ msg.content }}
+    </div>
+  </div>
+</div>
+
+<app-suggestion-bar
+  [suggestions]="(suggestions$ | async) ?? []"
+  (suggestionClicked)="handleUserMessage($event)">
+</app-suggestion-bar>
+<app-chat-input (messageSent)="handleUserMessage($event)"></app-chat-input>

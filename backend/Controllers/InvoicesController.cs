@@ -23,7 +23,7 @@ namespace backend.Controllers
         {
             var invoices = await _invoiceRepo.GetAllAsync(query);
 
-            var invoicesDtos = invoices.Select(i => i.toGetInvoiceDto());
+            var invoicesDtos = invoices.Invoices.Select(i => i.toGetInvoiceDto());
 
             return Ok(invoicesDtos);
         }
@@ -57,7 +57,7 @@ namespace backend.Controllers
             if (invoice is null)
                 return NotFound($"404 : INVOICE {id} IS NOT FOUND");
 
-            return Ok($"Success : Deleted invoice {id}");
+            return NoContent();
         }
 
         [HttpPut("{id}")]

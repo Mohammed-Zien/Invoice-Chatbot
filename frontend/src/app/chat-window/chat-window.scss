@@ -1,0 +1,50 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  height: 90vh;
+  margin: 2rem auto;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* 🔥 This sets the scrollable container height correctly */
+.chat-scroll-container {
+  flex: 1; /* Take all available space */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  scroll-behavior: smooth;
+}
+
+/* Don't duplicate this */
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  max-width: 75%;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+.message.user {
+  align-self: flex-end;
+  background-color: #daf5ff;
+  color: #00334e;
+}
+
+.message.bot {
+  align-self: flex-start;
+  background-color: #f1f1f1;
+  color: #333;
+}

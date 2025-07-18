@@ -6,6 +6,9 @@ namespace backend.Dtos.InvoiceDetailsDtos
     public class CreateInvoiceDetailDto
     {
         [Required]
+        public int invoice_id { get; set; }
+
+        [Required]
         [StringLength(255, MinimumLength = 1)]
         [DefaultValue("Item Description")]
         public string Itemdescription { get; set; } = null!;

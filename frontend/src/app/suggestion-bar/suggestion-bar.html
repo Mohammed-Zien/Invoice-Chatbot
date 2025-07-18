@@ -1,0 +1,7 @@
+<div class="suggestion-bar">
+  <button
+    *ngFor="let suggestion of suggestions"
+    (click)="useSuggestion(suggestion)">
+    {{ suggestion }}
+  </button>
+</div>
