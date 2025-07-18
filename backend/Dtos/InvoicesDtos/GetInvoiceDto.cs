@@ -4,8 +4,7 @@ namespace backend.Dtos.InvoicesDtos
 {
     public class GetInvoiceDto
     {
-        public int Id { get; set; }
-        public string? Invoicenumber { get; set; }
+        public string? InvoiceNumber { get; set; }
 
         public string? Clientname { get; set; }
 

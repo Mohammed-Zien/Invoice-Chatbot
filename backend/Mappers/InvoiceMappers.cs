@@ -10,8 +10,7 @@ namespace backend.Mappers
         {
             return new GetInvoiceDto
             {
-                Id = invoiceModel.Id,
-                Invoicenumber = invoiceModel.Invoicenumber,
+                InvoiceNumber = invoiceModel.Invoicenumber,
                 Clientname = invoiceModel.Clientname,
                 Issuedate = invoiceModel.Issuedate,
                 Duedate = invoiceModel.Duedate,
@@ -25,8 +24,7 @@ namespace backend.Mappers
         {
             return new GetInvoiceDtoWithDetails
             {
-                Id = invoiceModel.Id,
-                Invoicenumber = invoiceModel.Invoicenumber,
+                InvoiceNumber = invoiceModel.Invoicenumber,
                 Clientname = invoiceModel.Clientname,
                 Issuedate = invoiceModel.Issuedate,
                 Duedate = invoiceModel.Duedate,
@@ -42,7 +40,6 @@ namespace backend.Mappers
         {
             return new Invoice
             {
-                Invoicenumber = invoiceDto.Invoicenumber,   
                 Clientname = invoiceDto.Clientname,
                 Issuedate = DateOnly.FromDateTime(DateTime.Today),
                 Duedate = invoiceDto.Duedate,

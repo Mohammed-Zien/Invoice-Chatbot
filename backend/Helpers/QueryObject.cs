@@ -4,7 +4,7 @@ namespace backend.Helpers
 {
     public class QueryObject
     {
-        public string? InvoiceNumber { get; set; } = null;
+        public string? InvoiceNumber { get; set; }
         public string? ClientName { get; set; } = null;
         public DateOnly? FromDate { get; set; } = null;
         public DateOnly? ToDate { get; set; } = null;

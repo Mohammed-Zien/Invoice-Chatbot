@@ -5,10 +5,6 @@ using backend.DataAnnotations;
 public class CreateInvoiceDto
 {
     [Required]
-    [StringLength(50, MinimumLength = 3)]
-    public string? Invoicenumber { get; set; }
-
-    [Required]
     [StringLength(255)]
     [DefaultValue("Client Name")]
     public string? Clientname { get; set; }

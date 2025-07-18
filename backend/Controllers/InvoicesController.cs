@@ -23,7 +23,7 @@ namespace backend.Controllers
         {
             var invoices = await _invoiceRepo.GetAllAsync(query);
 
-            var invoicesDtos = invoices.Invoices.Select(i => i.toGetInvoiceDto());
+            var invoicesDtos = invoices.Invoices.Select(i => i.toGetInvoiceDtoWithDetails());
 
             return Ok(invoicesDtos);
         }

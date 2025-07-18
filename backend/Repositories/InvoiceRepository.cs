@@ -23,6 +23,10 @@ namespace backend.Repositories
             await _context.Invoices.AddAsync(invoiceModel);
             await _context.SaveChangesAsync();
 
+            invoiceModel.Invoicenumber = $"INV-{invoiceModel.Id}";
+            _context.Invoices.Update(invoiceModel);
+            await _context.SaveChangesAsync();
+
             return invoiceModel;
         }
 
@@ -44,10 +48,10 @@ namespace backend.Repositories
 
             //Query
             if (!string.IsNullOrWhiteSpace(query.InvoiceNumber))
-                invoices = invoices.Where(i => i.Invoicenumber.Contains(query.InvoiceNumber));
+                invoices = invoices.Where(i => i.Invoicenumber!.Contains(query.InvoiceNumber));
 
             if (!string.IsNullOrWhiteSpace(query.ClientName))
-                invoices = invoices.Where(i => i.Clientname.Contains(query.ClientName));
+                invoices = invoices.Where(i => i.Clientname!.Contains(query.ClientName));
 
             if (query.FromDate.HasValue)
                 invoices = invoices.Where(i => i.Issuedate >= query.FromDate);
