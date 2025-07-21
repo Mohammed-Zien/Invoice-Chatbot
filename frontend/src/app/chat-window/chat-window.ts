@@ -4,6 +4,7 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
+  AfterViewChecked,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SuggestionBar } from '../suggestion-bar/suggestion-bar';
@@ -20,7 +21,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './chat-window.html',
   styleUrls: ['./chat-window.scss'],
 })
-export class ChatWindow implements AfterViewInit, OnDestroy {
+export class ChatWindow implements AfterViewChecked {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef<HTMLDivElement>;
 
   messages$!: Observable<ChatMessage[]>;
@@ -34,12 +35,9 @@ export class ChatWindow implements AfterViewInit, OnDestroy {
     this.isLoading$ = this.chat.isLoading$;
   }
 
-  ngAfterViewInit(): void {
-    this.messagesSub = this.messages$.subscribe(() => {
-      // Give the DOM time to render the message
-      setTimeout(() => this.scrollToBottom(), 0);
-    });
-  }
+  ngAfterViewChecked(): void {
+      this.scrollToBottom();
+    }
 
   ngOnDestroy(): void {
     if (this.messagesSub) {
@@ -54,10 +52,7 @@ export class ChatWindow implements AfterViewInit, OnDestroy {
   private scrollToBottom(): void {
     const el = this.scrollContainer?.nativeElement;
     if (el) {
-      console.log("Scrolling to bottom...", el.scrollHeight);
       el.scrollTop = el.scrollHeight;
-    } else {
-      console.warn("Scroll container not found");
     }
   }
 }
