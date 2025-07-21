@@ -20,7 +20,8 @@ Invoice-Chatbot/
 ├── backend/ # .NET 9 Web API + Entity Framework
 ├── frontend/ # Angular 20 frontend (chat interface)
 ├── llm/ # Python RAG server (FastAPI + LangChain + Ollama)
-├── scripts/ # SQL script to set up PostgreSQL schema
+├── SQLQueries/ # SQL script to set up PostgreSQL schema
+├── Demos/ # Screenshots and Video demonstrating the App
 └── README.md
 
 ---
