@@ -8,9 +8,22 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from datetime import date
 import json
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:4200", 
+    "http://127.0.0.1:4200",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # or ["*"] for testing
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],    
+)
 
 # 1. Request model
 class QuestionRequest(BaseModel):
@@ -28,6 +41,7 @@ Today's date is: {today}
 
 Here is the structure:
 {{
+  'InvoiceNumber': string or null,
   "ClientName": string or null,
   "FromDate": "YYYY-MM-DD" or null,
   "ToDate": "YYYY-MM-DD" or null,

@@ -9,35 +9,48 @@ export class CreateInvoiceFlow implements Flow<CreateInvoiceDto> {
   handleUserInput(input: string): void {
     this.lastError = null; // Reset error each time
 
-    switch (this.step) {
-      case 0: {
-        this.invoice.invoicenumber = input.trim();
-        this.step++;
-        break;
-      }
-      case 1: {
-        this.invoice.clientname = input.trim();
-        this.step++;
+    switch (this.step)
+    {
+      case 0:
+      {
+        if(input.trim() === "")
+        {
+          this.lastError = "ERROR: Client Name is Rquired";
+        }
+        else
+        {
+          this.invoice.clientname = input.trim();
+          this.step++;
+        }
+
         break;
       }
 
-      case 2: {
+      case 1:
+      {
         const lowered = input.toLowerCase().trim();
 
-        if (/no|none|don't|skip/.test(lowered)) {
+        if (/no|none|don't|skip/.test(lowered))
+        {
           this.invoice.duedate = null;
           this.step++;
-        } else if (lowered === "today") {
+        }
+        else if (lowered === "today")
+        {
           this.invoice.duedate = new Date().toISOString().split("T")[0];
           this.step++;
-        } else {
+        }
+        else 
+        {
           const now = new Date();
           const match = lowered.match(/(\d+)?\s*(day|week|month|year)s?/);
 
-          if (match) {
+          if (match)
+          {
             const [, amountStr, unit] = match;
             const amount = parseInt(amountStr || "1", 10);
-            switch (unit) {
+            switch (unit)
+            {
               case "day": now.setDate(now.getDate() + amount); break;
               case "week": now.setDate(now.getDate() + amount * 7); break;
               case "month": now.setMonth(now.getMonth() + amount); break;
@@ -45,12 +58,17 @@ export class CreateInvoiceFlow implements Flow<CreateInvoiceDto> {
             }
             this.invoice.duedate = now.toISOString().split("T")[0];
             this.step++;
-          } else {
+          }
+          else
+          {
             const parsed = new Date(input);
-            if (!isNaN(parsed.getTime())) {
+            if (!isNaN(parsed.getTime()))
+            {
               this.invoice.duedate = parsed.toISOString().split("T")[0];
               this.step++;
-            } else {
+            }
+            else 
+            {
               this.lastError = "I didn't understand the due date. Try something like '2 weeks' or '2025-08-01'.";
             }
           }
@@ -58,24 +76,28 @@ export class CreateInvoiceFlow implements Flow<CreateInvoiceDto> {
         break;
       }
 
-
-      case 3: {
+      case 2:
+      {
         const statusMap: Record<string, number> = {
           unpaid: 0,
           pending: 1,
           paid: 2
         };
         const status = statusMap[input.toLowerCase().trim()];
-        if (status !== undefined) {
+        if (status !== undefined)
+        {
           this.invoice.status = status;
           this.step++;
-        } else {
+        } 
+        else
+        {
           this.lastError = "Status must be one of: unpaid, pending, or paid.";
         }
         break;
       }
-
-      case 4: {
+      
+      case 3:
+      {
         const currency = input.trim().toUpperCase();
         if(currency.length <= 3 && currency.length > 0)
         {
@@ -90,7 +112,8 @@ export class CreateInvoiceFlow implements Flow<CreateInvoiceDto> {
         break;
       }
 
-      case 5: {
+      case 4:
+      {
         this.invoice.notes = /no|none|skip/i.test(input) ? null : input.trim();
         this.step++;
         break;
@@ -100,23 +123,24 @@ export class CreateInvoiceFlow implements Flow<CreateInvoiceDto> {
 
   getCurrentPrompt(): string {
     switch (this.step) {
-      case 0: return "what is the invoice number?"
-      case 1: return "What is the client's name?";
-      case 2: return "When is the due date?";
-      case 3: return "What is the invoice status? (unpaid, pending, or paid)";
-      case 4: return "What is the currency?";
-      case 5: return "Any notes to include?";
+      case 0: return "What is the client's name?";
+      case 1: return "When is the due date?";
+      case 2: return "What is the invoice status? (unpaid, pending, or paid)";
+      case 3: return "What is the currency?";
+      case 4: return "Any notes to include?";
+      case 5: return "Would you like to add Items next ?"
       default: return "Invoice header complete.";
     }
   }
 
   getSuggestions(): string[] {
     switch (this.step) {
-      case 1: return ["Acme Corp", "Stark Industries", "Wayne Enterprises"];
-      case 2: return ["no due date", "today", "2 weeks", "1 month"];
-      case 3: return ["unpaid", "pending", "paid"];
-      case 4: return ["USD", "EUR", "EGP"];
-      case 5: return ["No", "Yes"];
+      case 0: return ["Acme Corp", "Stark Industries", "Wayne Enterprises"];
+      case 1: return ["no due date", "today", "2 weeks", "1 month"];
+      case 2: return ["unpaid", "pending", "paid"];
+      case 3: return ["USD", "EUR", "EGP"];
+      case 4: return ["No"];
+      case 5: return ["Yes", "No"]
       default: return [];
     }
   }
@@ -128,12 +152,11 @@ export class CreateInvoiceFlow implements Flow<CreateInvoiceDto> {
   }
 
   isComplete(): boolean {
-    return this.step > 5;
+    return this.step > 4;
   }
 
   getResult(): CreateInvoiceDto {
     return {
-      invoicenumber: this.invoice.invoicenumber!,
       clientname: this.invoice.clientname!,
       duedate: this.invoice.duedate ?? null,
       status: this.invoice.status!,

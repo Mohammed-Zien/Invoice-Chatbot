@@ -25,11 +25,13 @@ export class ChatWindow implements AfterViewInit, OnDestroy {
 
   messages$!: Observable<ChatMessage[]>;
   suggestions$!: Observable<string[]>;
+  isLoading$!: Observable<boolean>;
   private messagesSub!: Subscription;
 
   constructor(private chat: Chat) {
     this.messages$ = this.chat.messages$;
     this.suggestions$ = this.chat.suggestions$;
+    this.isLoading$ = this.chat.isLoading$;
   }
 
   ngAfterViewInit(): void {

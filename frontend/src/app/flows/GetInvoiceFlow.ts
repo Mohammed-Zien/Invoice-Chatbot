@@ -1,6 +1,6 @@
 import { Flow } from './flow.interface';
 
-export class DeleteInvoiceFlow implements Flow<string> {
+export class GetInvoiceFlow implements Flow<string> {
   private step = 0;
   private invoiceId: number | null = null;
   private invoiceNumber: string | null = null;
@@ -26,21 +26,13 @@ export class DeleteInvoiceFlow implements Flow<string> {
           }
           break;
         }
-      case 1:
-        {
-          const confirm = input.trim() === "confirm";
-          this.step++;
-          break;
-        }
     }
   }
 
   getCurrentPrompt(): string {
     switch (this.step) {
       case 0:
-        return 'Please enter the Invoice Number of the invoice you want to delete:';
-      case 1:
-        return `Are you sure you want to delete invoice ${this.invoiceNumber}? Type 'confirm' to proceed.`;
+        return 'Please enter the Invoice Number';
       default:
         return '';
     }
@@ -50,15 +42,13 @@ export class DeleteInvoiceFlow implements Flow<string> {
     switch (this.step) {
       case 0:
         return [];
-      case 1:
-        return ['confirm'];
       default:
         return [];
     }
   }
 
   isComplete(): boolean {
-    return this.step > 1;
+    return this.step > 0;
   }
 
   getErrorMessage(): string | null {

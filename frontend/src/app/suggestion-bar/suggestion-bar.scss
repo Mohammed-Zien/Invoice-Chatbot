@@ -1,22 +1,122 @@
 .suggestion-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.75rem;
   padding: 1rem;
-  border-bottom: 1px solid #eee;
-  background: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  align-items: center;
+  transition: opacity 0.3s ease-in-out;
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+
+  &__button {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border: 1px solid #90caf9;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1976d2;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+
+    // Hover effects
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%);
+      border-color: #64b5f6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+      color: #0d47a1;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(25, 118, 210, 0.25);
+    }
+
+    // Disabled state
+    &:disabled,
+    &.disabled {
+      background: #e9ecef;
+      border-color: #dee2e6;
+      color: #6c757d;
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    // Focus state for accessibility
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.25);
+    }
+
+    // Ripple effect on click
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease;
+    }
+
+    &:active:not(:disabled):before {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // Disabled state for entire bar
+  &.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+    gap: 0.5rem;
+
+    &__label {
+      font-size: 0.8rem;
+      margin-right: 0.25rem;
+    }
+
+    &__button {
+      font-size: 0.85rem;
+      padding: 0.4rem 0.8rem;
+    }
+  }
+
+  // Animation for when suggestions change
+  &__button {
+    animation: slideInUp 0.3s ease-out;
+  }
 }
 
-button {
-  background: #e0f0ff;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.2s ease-in-out;
-}
-
-button:hover {
-  background: #cbe6ff;
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

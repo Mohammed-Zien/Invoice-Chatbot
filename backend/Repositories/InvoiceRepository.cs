@@ -44,7 +44,7 @@ namespace backend.Repositories
 
         public async Task<GetAllResult> GetAllAsync(QueryObject query)
         {
-            var invoices = _context.Invoices.AsQueryable();
+            var invoices = _context.Invoices.Include(i => i.Invoicedetails).AsQueryable();
 
             //Query
             if (!string.IsNullOrWhiteSpace(query.InvoiceNumber))

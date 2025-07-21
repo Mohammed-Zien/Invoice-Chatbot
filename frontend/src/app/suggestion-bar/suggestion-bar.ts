@@ -10,10 +10,23 @@ import { CommonModule } from '@angular/common';
 })
 export class SuggestionBar {
   @Input() suggestions: string[] = [];
+  @Input() disabled = false;
   @Output() suggestionClicked = new EventEmitter<string>();
 
   useSuggestion(text: string) {
-    this.suggestionClicked.emit(text);
-    console.log('Suggestion clicked:', text);
+    if (!this.disabled) {
+      this.suggestionClicked.emit(text);
+      console.log('Suggestion clicked:', text);
+    }
+  }
+
+  // Helper method to check if suggestions should be shown
+  get hasSuggestions(): boolean {
+    return this.suggestions && this.suggestions.length > 0;
+  }
+
+  // TrackBy function for better performance
+  trackBySuggestion(index: number, suggestion: string): string {
+    return suggestion;
   }
 }

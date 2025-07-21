@@ -1,7 +1,13 @@
-<div class="suggestion-bar">
-  <button
-    *ngFor="let suggestion of suggestions"
-    (click)="useSuggestion(suggestion)">
+<div class="suggestion-bar" *ngIf="hasSuggestions" [class.disabled]="disabled">
+  <div class="suggestion-bar__label">Quick Actions:</div>
+  
+  <button 
+    *ngFor="let suggestion of suggestions; trackBy: trackBySuggestion" 
+    (click)="useSuggestion(suggestion)"
+    [disabled]="disabled"
+    class="suggestion-bar__button"
+    [class.disabled]="disabled"
+    [attr.aria-label]="'Use suggestion: ' + suggestion">
     {{ suggestion }}
   </button>
 </div>
