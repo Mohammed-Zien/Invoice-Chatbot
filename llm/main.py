@@ -47,7 +47,7 @@ Here is the structure:
   "ToDate": "YYYY-MM-DD" or null,
   "DueFrom": "YYYY-MM-DD" or null,
   "DueTo": "YYYY-MM-DD" or null,
-  "Status": 0 | 1 | 2 or null,
+  "Status": 0 | 1 | 2 or null, {{0 : unpaid, 1: pending, 2 : paid}}
   "MinTotal": number or null,
   "MaxTotal": number or null,
   "Currency": string or null
