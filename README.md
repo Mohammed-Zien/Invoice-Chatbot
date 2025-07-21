@@ -110,7 +110,7 @@ Frontend runs on: http://localhost:4200
 
 ### LLM Example Queries
 
-* Show me the total value ofinvoices this month
+* Show me the total value of invoices this month
 * Give me a summary of invoice INV-16
 * How many invoices were issued last week?
 * كم عدد الفواتير غير المدفوعة؟
