@@ -1,21 +1,32 @@
-<div class="chat-scroll-container" #scrollContainer>
-  <div class="messages">
-    <div *ngFor="let msg of messages$ | async" class="message" [ngClass]="msg.role">
-      {{ msg.content }}
-    </div>
-    <div class="typing-indicator" *ngIf="isLoading$ | async">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    </div>
 
-  </div>
+<div class="chat-container">
+  <div class="chat-header">
+  <h1 class="app-title">Invoicy</h1>
 </div>
 
-<app-suggestion-bar
-  [suggestions]="(suggestions$ | async) ?? []"
-  [disabled]="(isLoading$ | async) ?? true" 
-  (suggestionClicked)="handleUserMessage($event)">
-</app-suggestion-bar>
-<app-chat-input
-  [disabled]="(isLoading$ | async) ?? true"
-  (messageSent)="handleUserMessage($event)">
-</app-chat-input>
+  <div class="chat-scroll-container" #scrollContainer>
+    <div class="messages">
+      <div
+        *ngFor="let msg of messages$ | async"
+        class="message"
+        [ngClass]="msg.role"
+      >
+        {{ msg.content }}
+      </div>
+      <div class="typing-indicator" *ngIf="isLoading$ | async">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <app-suggestion-bar
+    [suggestions]="(suggestions$ | async) ?? []"
+    [disabled]="(isLoading$ | async) ?? true"
+    (suggestionClicked)="handleUserMessage($event)">
+  </app-suggestion-bar>
+
+  <app-chat-input
+    [disabled]="(isLoading$ | async) ?? true"
+    (messageSent)="handleUserMessage($event)">
+  </app-chat-input>
+</div>

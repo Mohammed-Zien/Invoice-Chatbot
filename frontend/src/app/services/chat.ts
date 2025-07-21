@@ -36,7 +36,9 @@ export class Chat {
   private _suggestions = new BehaviorSubject<string[]>([
     'Create a new invoice',
     'Update an invoice',
-    'Delete an invoice'
+    'Delete an invoice',
+    'Show an invoice'
+
   ]);
   public suggestions$ = this._suggestions.asObservable();
 
@@ -90,6 +92,7 @@ export class Chat {
           'Create a new invoice',
           'Update an invoice',
           'Delete an invoice',
+          'Show an invoice'
         ]);
         return;
       }
@@ -133,7 +136,8 @@ export class Chat {
         this._suggestions.next([
           'Create a new invoice',
           'Update an invoice',
-          'Delete an invoice'
+          'Delete an invoice',
+          'Show an invoice'
         ]);
         return;
       }
@@ -148,7 +152,7 @@ export class Chat {
     if (!this.activeFlow && userInput.startsWith('ask/'))
     {
       const question = userInput.split("/")[1];
-      this.pushMessage("bot", "...");
+      this.pushMessage("bot", "Thinking...");
       this.setLoading(true);
       try {
         const response = await this.AskLLM(question);
@@ -158,6 +162,8 @@ export class Chat {
           'Create a new invoice',
           'Update an invoice',
           'Delete an invoice',
+          'Show an invoice'
+
         ]);
         return;
       } catch (err: any) {
@@ -167,6 +173,8 @@ export class Chat {
           'Create a new invoice',
           'Update an invoice',
           'Delete an invoice',
+          'Show an invoice'
+
         ]);
         return;
       } finally {
@@ -227,6 +235,8 @@ export class Chat {
               'Create a new invoice',
               'Update an invoice',
               'Delete an invoice',
+              'Show an invoice'
+
             ]);
           } catch (err: any) {
             this.pushMessage('bot', `Failed to delete invoice:\n${err.message}`);
@@ -235,6 +245,8 @@ export class Chat {
               'Create a new invoice',
               'Update an invoice',
               'Delete an invoice',
+              'Show an invoice'
+
             ]);
           } finally {
             this.setLoading(false);
@@ -260,6 +272,8 @@ export class Chat {
               'Create a new invoice',
               'Update an invoice',
               'Delete an invoice',
+              'Show an invoice'
+
             ]);
           } finally {
             this.setLoading(false);
@@ -287,6 +301,8 @@ export class Chat {
               'Create a new invoice',
               'Update an invoice',
               'Delete an invoice',
+              'Show an invoice'
+
             ]);
           } finally {
             this.setLoading(false);
@@ -306,6 +322,8 @@ export class Chat {
               'Create a new invoice',
               'Update an invoice',
               'Delete an invoice',
+              'Show an invoice'
+
             ]);
           } catch (err: any) {
             this.pushMessage('bot', `Failed to Fetch invoice:\n${err.message}`);
@@ -314,6 +332,8 @@ export class Chat {
               'Create a new invoice',
               'Update an invoice',
               'Delete an invoice',
+              'Show an invoice'
+
             ]);
           } finally {
             this.setLoading(false);
