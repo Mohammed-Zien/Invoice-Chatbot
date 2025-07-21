@@ -113,6 +113,8 @@ Frontend runs on: http://localhost:4200
 * Show me the total value of invoices this month
 * Give me a summary of invoice INV-16
 * How many invoices were issued last week?
+* What is the total value of unpaid invoices?
+* What is the average invoice amount for client 'Acme Corp'?
 * كم عدد الفواتير غير المدفوعة؟
 
 
